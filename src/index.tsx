@@ -97,7 +97,7 @@ export default function Command() {
     }
 
     return (
-        <Grid columns={3}>
+        <Grid columns={6}>
             {timers.map((timer) => (
                 <TimerTile key={timer.id} timer={timer} onUpdate={updateTimer} onDelete={deleteTimer} />
             ))}
