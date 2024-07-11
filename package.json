@@ -2,26 +2,14 @@
     "name": "time-tracker",
     "title": "Time Tracker",
     "description": "A simple time tracking plugin for Raycast",
-    "icon": "time-tracker-icon.png",
+    "icon": "🦄",
     "author": "iampoul",
     "license": "MIT",
     "commands": [
         {
-            "name": "ViewTrackers",
-            "title": "View Trackers",
+            "name": "index",
+            "title": "Open Time Tracker",
             "description": "View all time trackers",
-            "mode": "view"
-        },
-        {
-            "name": "CreateTracker",
-            "title": "Create Tracker",
-            "description": "Create a new time tracker",
-            "mode": "view"
-        },
-        {
-            "name": "StartTimer",
-            "title": "Start Timer",
-            "description": "Start a timer for a tracker",
             "mode": "view"
         }
     ],
