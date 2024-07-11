@@ -22,8 +22,36 @@ export default function Command() {
 
         const newTimers = timers.map((timer) => {
             if (timer.id === updatedTimer.id) {
-                // ... (existing code)
+                // If this is the timer being updated
+                if (timer.isRunning && !updatedTimer.isRunning) {
+                    // Timer is being stopped
+                    const elapsedSeconds = timer.startTime ? Math.floor((currentTime - timer.startTime) / 1000) : 0
+                    return {
+                        ...updatedTimer,
+                        totalSeconds: timer.totalSeconds + elapsedSeconds,
+                        logs: [
+                            ...timer.logs,
+                            {
+                                id: uuidv4(),
+                                startTime: timer.startTime
+                                    ? new Date(timer.startTime).toISOString()
+                                    : new Date(currentTime).toISOString(),
+                                endTime: new Date(currentTime).toISOString(),
+                                duration: elapsedSeconds,
+                            },
+                        ],
+                        startTime: undefined,
+                    }
+                } else if (!timer.isRunning && updatedTimer.isRunning) {
+                    // Timer is being started
+                    return {
+                        ...updatedTimer,
+                        startTime: currentTime,
+                    }
+                }
+                return updatedTimer
             } else if (updatedTimer.isRunning && timer.isRunning) {
+                // If we're starting a new timer and this one was running
                 const elapsedSeconds = timer.startTime ? Math.floor((currentTime - timer.startTime) / 1000) : 0
                 return {
                     ...timer,
