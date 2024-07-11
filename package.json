@@ -1,15 +1,32 @@
 {
     "name": "time-tracker",
     "title": "Time Tracker",
-    "description": "A simple time tracking plugin for Raycast",
-    "icon": "🦄",
+    "description": "Effortlessly monitor your time with customizable timers and insightful analytics.",
+    "categories": [
+        "Productivity",
+        "Developer Tools"
+    ],
+    "keywords": [
+        "time",
+        "tracker",
+        "timer",
+        "stopwatch",
+        "efficiency",
+        "work",
+        "study",
+        "freelance",
+        "hours",
+        "timesheet",
+        "productivity"
+    ],
+    "icon": "icon.png",
     "author": "iampoul",
     "license": "MIT",
     "commands": [
         {
             "name": "index",
             "title": "View Time Trackers",
-            "description": "View all time trackers",
+            "description": "Overview of all time trackers",
             "mode": "view"
         }
     ],
@@ -18,20 +35,20 @@
         "uuid": "^8.3.2"
     },
     "devDependencies": {
-        "@biomejs/biome": "1.8.3",
-        "@types/node": "~18.8.3",
-        "@types/react": "^18.0.9",
+        "@raycast/eslint-config": "1.0.5",
+        "@types/node": "^18.8.4",
+        "@types/react": "^18.2.27",
         "@types/uuid": "^10.0.0",
-        "@typescript-eslint/eslint-plugin": "^5.0.0",
-        "@typescript-eslint/parser": "^5.0.0",
         "eslint": "^7.32.0",
-        "eslint-config-prettier": "^8.3.0",
-        "prettier": "^2.5.1",
+        "prettier": "^3.0.3",
+        "react": "^18.2.0",
         "typescript": "^4.4.3"
     },
     "scripts": {
         "build": "ray build -e dist",
         "dev": "ray develop",
-        "lint": "ray lint"
+        "lint": "ray lint",
+        "fix-lint": "ray lint --fix",
+        "publish": "npx @raycast/api@latest publish"
     }
 }
