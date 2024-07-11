@@ -2,23 +2,29 @@ import { Detail } from "@raycast/api"
 import React from "react"
 import { Timer } from "../utils/timerUtils"
 
-interface TimerRadarChartProps {
+interface TimerChartProps {
     timers: Timer[]
 }
 
 function formatTime(seconds: number): string {
+    if (seconds < 60) {
+        return `${seconds}s`
+    }
     const hours = Math.floor(seconds / 3600)
     const minutes = Math.floor((seconds % 3600) / 60)
+    if (hours === 0) {
+        return `${minutes}m`
+    }
     return `${hours}h ${minutes}m`
 }
 
-export function TimerChart({ timers }: TimerRadarChartProps) {
+export function TimerChart({ timers }: TimerChartProps) {
     const totalTime = timers.reduce((sum, timer) => sum + timer.totalSeconds, 0)
 
     const data = timers.map((timer) => ({
         name: timer.name,
         time: formatTime(timer.totalSeconds),
-        percentage: ((timer.totalSeconds / totalTime) * 100).toFixed(2),
+        percentage: totalTime > 0 ? ((timer.totalSeconds / totalTime) * 100).toFixed(2) : "0.00",
     }))
 
     const markdownTable = `
