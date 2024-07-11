@@ -1,3 +1,5 @@
+// in components/TimerTile.tsx
+
 import { Action, ActionPanel, Color, Grid, Icon } from "@raycast/api"
 import React, { useEffect, useState } from "react"
 import { Timer, formatTime } from "../utils/timerUtils"
@@ -16,10 +18,8 @@ export function TimerTile({ timer, onUpdate, onDelete }: TimerTileProps) {
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null
         if (timer.isRunning) {
-            const startTime = timer.startTime || Date.now()
             interval = setInterval(() => {
-                const now = Date.now()
-                setElapsedTime(timer.totalSeconds + Math.floor((now - startTime) / 1000))
+                setElapsedTime((prevTime) => prevTime + 1)
             }, 1000)
         } else {
             setElapsedTime(timer.totalSeconds)
@@ -28,18 +28,13 @@ export function TimerTile({ timer, onUpdate, onDelete }: TimerTileProps) {
         return () => {
             if (interval) clearInterval(interval)
         }
-    }, [timer.isRunning, timer.totalSeconds, timer.startTime])
+    }, [timer.isRunning, timer.totalSeconds])
 
     const toggleTimer = () => {
-        const currentTime = Date.now()
-        const updatedTimer: Timer = {
+        const updatedTimer = {
             ...timer,
             isRunning: !timer.isRunning,
-            totalSeconds:
-                timer.isRunning && timer.startTime
-                    ? timer.totalSeconds + Math.floor((currentTime - timer.startTime) / 1000)
-                    : timer.totalSeconds,
-            startTime: !timer.isRunning ? currentTime : undefined,
+            totalSeconds: elapsedTime,
         }
         onUpdate(updatedTimer)
     }
@@ -51,7 +46,7 @@ export function TimerTile({ timer, onUpdate, onDelete }: TimerTileProps) {
                 tintColor: timer.color as Color,
             }}
             title={timer.name}
-            subtitle={`Total: ${formatTime(elapsedTime)}`}
+            subtitle={formatTime(elapsedTime)}
             actions={
                 <ActionPanel>
                     <Action
