@@ -19,12 +19,21 @@ export default function Command() {
     const updateTimer = async (updatedTimer: Timer) => {
         const currentTime = Date.now()
 
-        let newTimers = timers.map((timer) => {
+        const newTimers = timers.map((timer) => {
             if (timer.id === updatedTimer.id) {
+                // If this is the timer being updated
+                if (timer.isRunning) {
+                    // If it was running, update its totalSeconds
+                    const elapsedSeconds = timer.startTime ? Math.floor((currentTime - timer.startTime) / 1000) : 0
+                    return {
+                        ...updatedTimer,
+                        totalSeconds: timer.totalSeconds + elapsedSeconds,
+                        startTime: updatedTimer.isRunning ? currentTime : undefined,
+                    }
+                }
                 return updatedTimer
             } else if (updatedTimer.isRunning && timer.isRunning) {
-                // If this timer is being started and another timer is running,
-                // stop the other timer and save its progress
+                // If we're starting a new timer and this one was running
                 const elapsedSeconds = timer.startTime ? Math.floor((currentTime - timer.startTime) / 1000) : 0
                 return {
                     ...timer,
@@ -40,23 +49,11 @@ export default function Command() {
                             duration: elapsedSeconds,
                         },
                     ],
-                    startTime: undefined, // Clear the start time
+                    startTime: undefined,
                 }
             }
             return timer
         })
-
-        // If the updated timer is being started, set its start time
-        if (updatedTimer.isRunning) {
-            newTimers = newTimers.map((timer) =>
-                timer.id === updatedTimer.id ? { ...timer, startTime: currentTime } : timer,
-            )
-        } else {
-            // If the timer is being stopped, clear its start time
-            newTimers = newTimers.map((timer) =>
-                timer.id === updatedTimer.id ? { ...timer, startTime: undefined } : timer,
-            )
-        }
 
         setTimers(newTimers)
         await storeTimers(newTimers)

@@ -16,8 +16,10 @@ export function TimerTile({ timer, onUpdate, onDelete }: TimerTileProps) {
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null
         if (timer.isRunning) {
+            const startTime = timer.startTime || Date.now()
             interval = setInterval(() => {
-                setElapsedTime((prevTime) => prevTime + 1)
+                const now = Date.now()
+                setElapsedTime(timer.totalSeconds + Math.floor((now - startTime) / 1000))
             }, 1000)
         } else {
             setElapsedTime(timer.totalSeconds)
@@ -26,13 +28,18 @@ export function TimerTile({ timer, onUpdate, onDelete }: TimerTileProps) {
         return () => {
             if (interval) clearInterval(interval)
         }
-    }, [timer.isRunning, timer.totalSeconds])
+    }, [timer.isRunning, timer.totalSeconds, timer.startTime])
 
     const toggleTimer = () => {
-        const updatedTimer = {
+        const currentTime = Date.now()
+        const updatedTimer: Timer = {
             ...timer,
             isRunning: !timer.isRunning,
-            totalSeconds: elapsedTime,
+            totalSeconds:
+                timer.isRunning && timer.startTime
+                    ? timer.totalSeconds + Math.floor((currentTime - timer.startTime) / 1000)
+                    : timer.totalSeconds,
+            startTime: !timer.isRunning ? currentTime : undefined,
         }
         onUpdate(updatedTimer)
     }

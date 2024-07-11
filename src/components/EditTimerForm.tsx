@@ -17,6 +17,9 @@ export function EditTimerForm({ timer, onUpdate }: EditTimerFormProps) {
             ...timer,
             name,
             color,
+            // Preserve the running state and startTime
+            isRunning: timer.isRunning,
+            startTime: timer.startTime,
         }
         onUpdate(updatedTimer)
         pop()
