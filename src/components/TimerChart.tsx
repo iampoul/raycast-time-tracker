@@ -7,15 +7,22 @@ interface TimerChartProps {
 }
 
 function formatTime(seconds: number): string {
-    if (seconds < 60) {
-        return `${seconds}s`
-    }
     const hours = Math.floor(seconds / 3600)
     const minutes = Math.floor((seconds % 3600) / 60)
-    if (hours === 0) {
-        return `${minutes}m`
+    const remainingSeconds = seconds % 60
+
+    const result = []
+    if (hours > 0) {
+        result.push(`${hours}h`)
     }
-    return `${hours}h ${minutes}m`
+    if (minutes > 0 || hours > 0) {
+        result.push(`${minutes}m`)
+    }
+    if (remainingSeconds > 0 || (hours === 0 && minutes === 0)) {
+        result.push(`${remainingSeconds}s`)
+    }
+
+    return result.join(" ")
 }
 
 export function TimerChart({ timers }: TimerChartProps) {

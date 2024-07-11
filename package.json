@@ -8,7 +8,7 @@
     "commands": [
         {
             "name": "index",
-            "title": "Open Time Tracker",
+            "title": "View Time Trackers",
             "description": "View all time trackers",
             "mode": "view"
         }
