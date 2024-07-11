@@ -1,5 +1,6 @@
 import { Action, ActionPanel, Color, Grid, Icon, Toast, showToast } from "@raycast/api"
 import { useEffect, useState } from "react"
+import { v4 as uuidv4 } from "uuid"
 import { AddNewTimerForm } from "./components/AddNewTimerForm"
 import { TimerTile } from "./components/TimerTile"
 import { getStoredTimers, storeTimers } from "./utils/storage"
@@ -21,19 +22,8 @@ export default function Command() {
 
         const newTimers = timers.map((timer) => {
             if (timer.id === updatedTimer.id) {
-                // If this is the timer being updated
-                if (timer.isRunning) {
-                    // If it was running, update its totalSeconds
-                    const elapsedSeconds = timer.startTime ? Math.floor((currentTime - timer.startTime) / 1000) : 0
-                    return {
-                        ...updatedTimer,
-                        totalSeconds: timer.totalSeconds + elapsedSeconds,
-                        startTime: updatedTimer.isRunning ? currentTime : undefined,
-                    }
-                }
-                return updatedTimer
+                // ... (existing code)
             } else if (updatedTimer.isRunning && timer.isRunning) {
-                // If we're starting a new timer and this one was running
                 const elapsedSeconds = timer.startTime ? Math.floor((currentTime - timer.startTime) / 1000) : 0
                 return {
                     ...timer,
@@ -42,6 +32,7 @@ export default function Command() {
                     logs: [
                         ...timer.logs,
                         {
+                            id: uuidv4(),
                             startTime: timer.startTime
                                 ? new Date(timer.startTime).toISOString()
                                 : new Date(currentTime).toISOString(),
