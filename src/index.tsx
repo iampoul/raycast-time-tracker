@@ -98,33 +98,37 @@ export default function Command() {
 
     return (
         <Grid columns={6}>
-            {timers.map((timer) => (
-                <TimerTile key={timer.id} timer={timer} onUpdate={updateTimer} onDelete={deleteTimer} />
-            ))}
-            <Grid.Item
-                content={{
-                    source: Icon.Plus,
-                    tintColor: Color.Blue,
-                }}
-                title="Add New Timer"
-                actions={
-                    <ActionPanel>
-                        <Action.Push title="Add New Timer" target={<AddNewTimerForm onAdd={addNewTimer} />} />
-                    </ActionPanel>
-                }
-            />
-            <Grid.Item
-                content={{
-                    source: Icon.PieChart,
-                    tintColor: Color.Green,
-                }}
-                title="View Time Distribution"
-                actions={
-                    <ActionPanel>
-                        <Action.Push title="View Time Distribution" target={<TimerChart timers={timers} />} />
-                    </ActionPanel>
-                }
-            />
+            <Grid.Section title="Timers">
+                {timers.map((timer) => (
+                    <TimerTile key={timer.id} timer={timer} onUpdate={updateTimer} onDelete={deleteTimer} />
+                ))}
+            </Grid.Section>
+            <Grid.Section title="Options">
+                <Grid.Item
+                    content={{
+                        source: Icon.Plus,
+                        tintColor: Color.Blue,
+                    }}
+                    title="Add New Timer"
+                    actions={
+                        <ActionPanel>
+                            <Action.Push title="Add New Timer" target={<AddNewTimerForm onAdd={addNewTimer} />} />
+                        </ActionPanel>
+                    }
+                />
+                <Grid.Item
+                    content={{
+                        source: Icon.PieChart,
+                        tintColor: Color.Green,
+                    }}
+                    title="View Time Distribution"
+                    actions={
+                        <ActionPanel>
+                            <Action.Push title="View Time Distribution" target={<TimerChart timers={timers} />} />
+                        </ActionPanel>
+                    }
+                />
+            </Grid.Section>
         </Grid>
     )
 }
