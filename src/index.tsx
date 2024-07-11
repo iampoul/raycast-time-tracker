@@ -2,6 +2,7 @@ import { Action, ActionPanel, Color, Grid, Icon, Toast, showToast } from "@rayca
 import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { AddNewTimerForm } from "./components/AddNewTimerForm"
+import { TimerChart } from "./components/TimerChart"
 import { TimerTile } from "./components/TimerTile"
 import { getStoredTimers, storeTimers } from "./utils/storage"
 import { Timer } from "./utils/timerUtils"
@@ -109,6 +110,18 @@ export default function Command() {
                 actions={
                     <ActionPanel>
                         <Action.Push title="Add New Timer" target={<AddNewTimerForm onAdd={addNewTimer} />} />
+                    </ActionPanel>
+                }
+            />
+            <Grid.Item
+                content={{
+                    source: Icon.PieChart,
+                    tintColor: Color.Green,
+                }}
+                title="View Time Distribution"
+                actions={
+                    <ActionPanel>
+                        <Action.Push title="View Time Distribution" target={<TimerChart timers={timers} />} />
                     </ActionPanel>
                 }
             />
