@@ -1,9 +1,9 @@
 import { Action, ActionPanel, Detail } from "@raycast/api"
-import formatTime from "../lib/formatTime"
-import { Tracker } from "../types"
 import StartTimer from "./StartTimer"
+import formatTime from "./formatTime"
+import { Tracker } from "./types"
 
-const TrackerDetails = ({ tracker }: { tracker: Tracker }) => {
+export default function Command({ tracker }: { tracker: Tracker }) {
     const markdown = `
 # ${tracker.title}
 
@@ -33,5 +33,3 @@ ${tracker.logs
         />
     )
 }
-
-export default TrackerDetails

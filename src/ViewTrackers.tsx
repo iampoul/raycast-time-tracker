@@ -1,10 +1,10 @@
 import { Action, ActionPanel, List } from "@raycast/api"
 import { useEffect, useState } from "react"
-import formatTime from "../lib/formatTime"
-import { getTrackers } from "../store"
-import { Tracker } from "../types"
 import StartTimer from "./StartTimer"
 import TrackerDetails from "./TrackerDetails"
+import formatTime from "./formatTime"
+import { getTrackers } from "./store"
+import { Tracker } from "./types"
 
 const ViewTrackers = () => {
     const [trackers, setTrackers] = useState<Tracker[]>([])

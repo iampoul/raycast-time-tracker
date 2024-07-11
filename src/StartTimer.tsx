@@ -2,14 +2,14 @@
 import { Action, ActionPanel, List, Toast, showToast } from "@raycast/api"
 import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { getTrackers, saveTrackers } from "../store"
-import { TimeEntry, Tracker } from "../types"
+import { getTrackers, saveTrackers } from "./store"
+import { TimeEntry, Tracker } from "./types"
 
 interface StartTimerProps {
     tracker?: Tracker
 }
 
-const StartTimer = ({ tracker }: StartTimerProps) => {
+export default function Command({ tracker }: StartTimerProps) {
     const [trackers, setTrackers] = useState<Tracker[]>([])
 
     useEffect(() => {
@@ -52,5 +52,3 @@ const StartTimer = ({ tracker }: StartTimerProps) => {
         </List>
     )
 }
-
-export default StartTimer

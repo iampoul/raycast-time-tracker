@@ -1,47 +1,49 @@
 {
-  "name": "time-tracker",
-  "title": "Time Tracker",
-  "description": "A simple time tracking plugin for Raycast",
-  "icon": "time-tracker-icon.png",
-  "author": "iampoul",
-  "license": "MIT",
-  "commands": [
-    {
-      "name": "viewTrackers",
-      "title": "View Trackers",
-      "description": "View all time trackers",
-      "mode": "view"
+    "name": "time-tracker",
+    "title": "Time Tracker",
+    "description": "A simple time tracking plugin for Raycast",
+    "icon": "time-tracker-icon.png",
+    "author": "iampoul",
+    "license": "MIT",
+    "commands": [
+        {
+            "name": "ViewTrackers",
+            "title": "View Trackers",
+            "description": "View all time trackers",
+            "mode": "view"
+        },
+        {
+            "name": "CreateTracker",
+            "title": "Create Tracker",
+            "description": "Create a new time tracker",
+            "mode": "view"
+        },
+        {
+            "name": "StartTimer",
+            "title": "Start Timer",
+            "description": "Start a timer for a tracker",
+            "mode": "view"
+        }
+    ],
+    "dependencies": {
+        "@raycast/api": "^1.38.2",
+        "uuid": "^8.3.2"
     },
-    {
-      "name": "createTracker",
-      "title": "Create Tracker",
-      "description": "Create a new time tracker",
-      "mode": "view"
+    "devDependencies": {
+        "@biomejs/biome": "1.8.3",
+        "@types/node": "~18.8.3",
+        "@types/react": "^18.0.9",
+        "@types/uuid": "^10.0.0",
+        "@typescript-eslint/eslint-plugin": "^5.0.0",
+        "@typescript-eslint/parser": "^5.0.0",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "prettier": "^2.5.1",
+        "typescript": "^4.4.3"
     },
-    {
-      "name": "startTimer",
-      "title": "Start Timer",
-      "description": "Start a timer for a tracker",
-      "mode": "view"
+    "scripts": {
+        "build": "ray build -e dist",
+        "dev": "ray develop",
+        "lint": "ray lint"
     }
-  ],
-  "dependencies": {
-    "@raycast/api": "^1.38.2",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "@types/node": "~18.8.3",
-    "@types/react": "^18.0.9",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "prettier": "^2.5.1",
-    "typescript": "^4.4.3"
-  },
-  "scripts": {
-    "build": "ray build -e dist",
-    "dev": "ray develop",
-    "lint": "ray lint"
-  }
 }

@@ -1,10 +1,10 @@
 import { Action, ActionPanel, Form, Toast, showToast } from "@raycast/api"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { getTrackers, saveTrackers } from "../store"
-import { Tracker } from "../types"
+import { getTrackers, saveTrackers } from "./store"
+import { Tracker } from "./types"
 
-const CreateTracker = () => {
+export default function Command() {
     const [title, setTitle] = useState("")
 
     async function handleSubmit() {
@@ -33,5 +33,3 @@ const CreateTracker = () => {
         </Form>
     )
 }
-
-export default CreateTracker
