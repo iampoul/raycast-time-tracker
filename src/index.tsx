@@ -1,5 +1,5 @@
 import { Action, ActionPanel, Color, Grid, Icon, Toast, showToast } from "@raycast/api"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { AddNewTimerForm } from "./components/AddNewTimerForm"
 import { TimerChart } from "./components/TimerChart"
@@ -10,13 +10,30 @@ import { Timer } from "./utils/timerUtils"
 export default function Command() {
     const [timers, setTimers] = useState<Timer[]>([])
 
+    const updateRunningTimers = useCallback((storedTimers: Timer[]) => {
+        const currentTime = Date.now()
+        return storedTimers.map((timer) => {
+            if (timer.isRunning && timer.startTime) {
+                const elapsedSeconds = Math.floor((currentTime - timer.startTime) / 1000)
+                return {
+                    ...timer,
+                    totalSeconds: timer.totalSeconds + elapsedSeconds,
+                    startTime: currentTime,
+                }
+            }
+            return timer
+        })
+    }, [])
+
     useEffect(() => {
         const loadTimers = async () => {
             const storedTimers = await getStoredTimers()
-            setTimers(storedTimers)
+            const updatedTimers = updateRunningTimers(storedTimers)
+            setTimers(updatedTimers)
+            await storeTimers(updatedTimers)
         }
         loadTimers()
-    }, [])
+    }, [updateRunningTimers])
 
     const updateTimer = async (updatedTimer: Timer) => {
         const currentTime = Date.now()
